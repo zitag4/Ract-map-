@@ -9,15 +9,15 @@ class App extends Component {
     infoWOpen: false,
     currentMarker: {},
     map: '',
-    infowindow: ''
-  /*    locations: [
+    infowindow: '',
+    locations: [
         {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
         {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
         {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
         {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
         {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
         {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
-        ]*/
+        ]
       }
   componentDidMount() {
     loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDRxmJRw4I4YQIMPSBFVuYfuWl79PLyDZQ&v=3&callback=initMap')
@@ -71,6 +71,7 @@ class App extends Component {
         this.openInfoWindow(marker);
       });
     }
+    this.setState({markers: markers});
   }
 
   openInfoWindow = (marker) => {
@@ -92,7 +93,7 @@ class App extends Component {
         this.state.infowindow.open(this.state.map, this.state.currentMarker);
         // Make sure the marker property is cleared if the infowindow is closed.
         this.state.infowindow.addListener('closeclick', () => {
-          this.state.infowindow.setMarker = null;
+      //    this.state.infowindow.setMarker = null;
           this.setState({
             currentMarker: null,
             infoWOpen: false
@@ -107,13 +108,27 @@ class App extends Component {
 
     return (
       <div id='map'>
+      <div>
+        <ul className='list'>
 
-     {this.updateInfowindow()}   /*{
+        {this.state.markers.map( (marker, i) => (
+              <li key={i}>
+                <p>{marker.title}</p>
+              </li>
+          )
+        ) }
+        </ul>
+        </div>
+      <div>
+
+     {this.updateInfowindow()}
+     /*{
       this.state.infoWindowIsOpen &&
         <Infowindow
           updateInfowindow={this.state.updateInfowindow}
           currentMarker={this.state.currentMarker}
         />} */
+      </div>
       </div>
     );
   }
