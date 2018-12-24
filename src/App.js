@@ -79,20 +79,24 @@ class App extends Component {
       infoWOpen: true
       });
 
-    this.state.infowindow.open(this.state.map, this.state.currentMarker)
+    //this.state.infowindow.open(this.state.map, this.state.currentMarker)
     }
 
 
   updateInfowindow = () => {
-      if(this.infowindow) {
+      if(this.state.infoWOpen) {
 
-      if (this.state.map) {
+      if (this.state.infowindow) {
 
-    //    this.state.infowindow.setContent('<div>' + this.state.currentMarker.title + '</div>');
+        this.state.infowindow.setContent('<div>' + this.state.currentMarker.title + '</div>');
         this.state.infowindow.open(this.state.map, this.state.currentMarker);
         // Make sure the marker property is cleared if the infowindow is closed.
         this.state.infowindow.addListener('closeclick', () => {
-      //    this.state.infowindow.setMarker = null;
+          this.state.infowindow.setMarker = null;
+          this.setState({
+            currentMarker: null,
+            infoWOpen: false
+            });
         });
       }
     }
