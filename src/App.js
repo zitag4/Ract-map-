@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
+import Infowindow from './Infowindow.js';
 
 
 class App extends Component {
   state = {
-    markers: []
+    markers: [],
+    infoWOpen: false,
+    currentMarker: {},
+    map: '',
+    infowindow: ''
   /*    locations: [
         {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
         {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
@@ -22,11 +27,17 @@ class App extends Component {
   initMap = () => {
     // Create a new blank array for all the listing markers.
     let markers = [];
+
     const google = window.google;
-    const  map = new google.maps.Map(document.getElementById('map'), {
+  let map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 40.7413549, lng: -73.9980244},
       zoom: 13
-    });
+    })
+
+  let infowindow = new google.maps.InfoWindow();
+  console.log('infowindow'+infowindow);
+  this.setState({map: map, infowindow: infowindow})
+
 
     var locations = [
       {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
@@ -54,12 +65,52 @@ class App extends Component {
 
       // Push the marker to our array of markers.
       markers.push(marker);
+      //  infowindow.open(map, marker)
+      // Create an onclick event to open an infowindow at each marker.
+      marker.addListener('click', () => {
+        this.openInfoWindow(marker);
+      });
     }
   }
 
+  openInfoWindow = (marker) => {
+    this.setState({
+      currentMarker: marker,
+      infoWOpen: true
+      });
+
+    this.state.infowindow.open(this.state.map, this.state.currentMarker)
+    }
+
+
+  updateInfowindow = () => {
+      if(this.infowindow) {
+
+      if (this.state.map) {
+
+    //    this.state.infowindow.setContent('<div>' + this.state.currentMarker.title + '</div>');
+        this.state.infowindow.open(this.state.map, this.state.currentMarker);
+        // Make sure the marker property is cleared if the infowindow is closed.
+        this.state.infowindow.addListener('closeclick', () => {
+      //    this.state.infowindow.setMarker = null;
+        });
+      }
+    }
+
+  }
+
   render() {
+
     return (
-      <div id='map'></div>
+      <div id='map'>
+
+     {this.updateInfowindow()}   /*{
+      this.state.infoWindowIsOpen &&
+        <Infowindow
+          updateInfowindow={this.state.updateInfowindow}
+          currentMarker={this.state.currentMarker}
+        />} */
+      </div>
     );
   }
 }
