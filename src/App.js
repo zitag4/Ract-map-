@@ -5,6 +5,7 @@ import Infowindow from './Infowindow.js';
 
 class App extends Component {
   state = {
+    sidebarOpen: false,
     markers: [],
     infoWOpen: false,
     currentMarker: {},
@@ -104,21 +105,53 @@ class App extends Component {
 
   }
 
-  render() {
+  openSidebar = () => {
+    this.setState( (prevState) => {
+      return {sidebarOpen: !prevState.sidebarOpen};
+    });
+  }
+  closeSidebar = () => {
+    this.setState({sidebarOpen: false});
+  }
 
+  render() {
     return (
-      <div id='map'>
-      <div>
-        <ul className='list'>
+      <div className='app'>
+      <header>
+
+        <nav className='navigation'>
+          <button className='menu-button' onClick={this.openSidebar}>
+            <div className='menu-button-line'/>
+            <div className='menu-button-line'/>
+            <div className='menu-button-line'/>
+          </button>
+          <h1>Explore the world</h1>
+        </nav>
+      </header>
+    { this.state.sidebarOpen &&
+        <div className='sidebar'>
+          <ul>
+            <li><a href='/'>ez</a></li>
+            <li><a href='/'>az</a></li>
+          </ul>
+        </div>
+    }
+
+
+{/*      <nav className='list' role='navigation'>
 
         {this.state.markers.map( (marker, i) => (
-              <li key={i}>
-                <p>{marker.title}</p>
-              </li>
+              <a key={i} className='list-item' href='localhost:3000/#'onKeyPress={this.updateInfowindow.bind(this, marker)}
+                                       onClick={this.updateInfowindow.bind(this, marker)}>
+                {marker.title}
+              </a>
           )
         ) }
-        </ul>
-        </div>
+        </nav> */}
+        <main>
+	         <div id='map' onClick={this.closeSidebar}></div>
+	      </main>
+
       <div>
 
      {this.updateInfowindow()}
