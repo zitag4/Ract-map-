@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Infowindow from './Infowindow.js';
+import SearchList from './SearchList.js';
 
 
 class App extends Component {
@@ -116,10 +117,7 @@ class App extends Component {
     this.setState({sidebarOpen: false});
   }
 
-  manageListClick = (element) => {
-      this.openInfoWindow(element);
-    console.log(element);
-  }
+
 
   render() {
     return (
@@ -137,17 +135,12 @@ class App extends Component {
       </header>
     { this.state.sidebarOpen &&
         <div className='sidebar'>
-          <form>
-            <input type='text' placeholder='Finde a place' role='search'></input>
-            <button>Search</button>
-          </form>
-          <ul>
-            {this.state.markers.map( (marker) => (
-            <li key={marker.id} className='list-item' onClick={this.manageListClick.bind(this, marker)}>
-              {marker.title}
-            </li>
-          ))}
-          </ul>
+          <SearchList
+          openInfoWindow = {this.openInfoWindow}
+           markers = {this.state.markers}
+           map = {this.state.map}
+          />
+
         </div>
     }
         <main>
