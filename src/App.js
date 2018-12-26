@@ -84,7 +84,6 @@ class App extends Component {
     //this.state.infowindow.open(this.state.map, this.state.currentMarker)
     }
 
-
   updateInfowindow = () => {
       if(this.state.infoWOpen) {
 
@@ -92,6 +91,9 @@ class App extends Component {
 
         this.state.infowindow.setContent('<div>' + this.state.currentMarker.title + '</div>');
         this.state.infowindow.open(this.state.map, this.state.currentMarker);
+        this.state.currentMarker.setAnimation(
+					window.google.maps.Animation.BOUNCE)
+          setTimeout((this.state.currentMarker.setAnimation((null))), 1000);
         // Make sure the marker property is cleared if the infowindow is closed.
         this.state.infowindow.addListener('closeclick', () => {
       //    this.state.infowindow.setMarker = null;
@@ -114,12 +116,17 @@ class App extends Component {
     this.setState({sidebarOpen: false});
   }
 
+  manageListClick = (element) => {
+      this.openInfoWindow(element);
+    console.log(element);
+  }
+
   render() {
     return (
       <div className='app'>
       <header>
 
-        <nav className='navigation'>
+        <nav className='navigation' >
           <button className='menu-button' onClick={this.openSidebar}>
             <div className='menu-button-line'/>
             <div className='menu-button-line'/>
@@ -130,24 +137,19 @@ class App extends Component {
       </header>
     { this.state.sidebarOpen &&
         <div className='sidebar'>
+          <form>
+            <input type='text' placeholder='Finde a place' role='search'></input>
+            <button>Search</button>
+          </form>
           <ul>
-            <li><a href='/'>ez</a></li>
-            <li><a href='/'>az</a></li>
+            {this.state.markers.map( (marker) => (
+            <li key={marker.id} className='list-item' onClick={this.manageListClick.bind(this, marker)}>
+              {marker.title}
+            </li>
+          ))}
           </ul>
         </div>
     }
-
-
-{/*      <nav className='list' role='navigation'>
-
-        {this.state.markers.map( (marker, i) => (
-              <a key={i} className='list-item' href='localhost:3000/#'onKeyPress={this.updateInfowindow.bind(this, marker)}
-                                       onClick={this.updateInfowindow.bind(this, marker)}>
-                {marker.title}
-              </a>
-          )
-        ) }
-        </nav> */}
         <main>
 	         <div id='map' onClick={this.closeSidebar}></div>
 	      </main>
