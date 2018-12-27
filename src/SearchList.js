@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import escapeRegExp from 'escape-string-regexp'
+import './App.css';
 
 class SearchList extends Component{
   state = {
@@ -27,18 +28,24 @@ class SearchList extends Component{
     this.state.displayedMarkers.forEach( (marker) => marker.setMap(this.props.map))
 
     return(
-      <div>
+      <div className='sidebar'>
       <form>
-        <input type='text'
+        <input className='input-field'
+               type='text'
                placeholder='Finde a place'
-               role='search'
+               aria-label="Search"
                value={this.state.query}
                onChange={(event) => this.updateSearchQuery(event.target.value)}>
         </input>
       </form>
-      <ul>
+      <ul role="tablist">
         {this.state.displayedMarkers.map( (marker) => (
-        <li key={marker.id} className='list-item' onClick={this.manageListClick.bind(this, marker)}>
+        <li key={marker.id}
+            className='list-item'
+            tabindex={0}
+            role='button'
+            onClick={this.manageListClick.bind(this, marker)}
+            onKeyPress={this.manageListClick.bind(this, marker)}>
           {marker.title}
         </li>
       ))}

@@ -124,8 +124,9 @@ class App extends Component {
       <div className='app'>
       <header>
 
-        <nav className='navigation' >
-          <button className='menu-button' onClick={this.openSidebar}>
+        <nav className='navigation' role="navigation" >
+          <button className='menu-button' onClick={this.openSidebar} role='button'
+           aria-label="Navigation">
             <div className='menu-button-line'/>
             <div className='menu-button-line'/>
             <div className='menu-button-line'/>
@@ -133,21 +134,22 @@ class App extends Component {
           <h1>Explore the world</h1>
         </nav>
       </header>
-    { this.state.sidebarOpen &&
-        <div className='sidebar'>
-          <SearchList
-          openInfoWindow = {this.openInfoWindow}
-           markers = {this.state.markers}
-           map = {this.state.map}
-          />
 
-        </div>
-    }
+    { this.state.sidebarOpen &&
+          <SearchList
+            openInfoWindow = {this.openInfoWindow}
+            markers = {this.state.markers}
+            map = {this.state.map}
+          />}
+
         <main>
-	         <div id='map' onClick={this.closeSidebar}></div>
+	         <div id='map'
+                role='application'
+                onClick={this.closeSidebar}>
+           </div>
 	      </main>
 
-      <div>
+      <div tabindex={0}>
 
      {this.updateInfowindow()}
      /*{
