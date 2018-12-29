@@ -16,7 +16,9 @@ class SearchList extends Component{
     this.setState({displayedMarkers: this.props.markers.filter( (marker) => match.test(marker.title) )})
     }
     else
-    this.setState({ displayedMarkers: this.props.markers })
+    {this.setState({ displayedMarkers: this.props.markers })}
+
+
   }
 
   manageListClick = (element) => {
@@ -42,7 +44,7 @@ class SearchList extends Component{
         {this.state.displayedMarkers.map( (marker) => (
         <li key={marker.id}
             className='list-item'
-            tabindex={0}
+            tabIndex={0}
             role='button'
             onClick={this.manageListClick.bind(this, marker)}
             onKeyPress={this.manageListClick.bind(this, marker)}>
