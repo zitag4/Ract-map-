@@ -114,6 +114,7 @@ class App extends Component {
     this.setState( (prevState) => {
       return {sidebarOpen: !prevState.sidebarOpen};
     });
+
   }
   closeSidebar = () => {
     this.setState({sidebarOpen: false});
@@ -147,7 +148,7 @@ class App extends Component {
         <main>
 	         <div id='map'
                 role='application'
-                onClick={this.closeSidebar}>
+              >
            </div>
 	      </main>
 
