@@ -4,7 +4,6 @@ import './App.css';
 
 class SearchList extends Component{
   state = {
-
     searchQuery: '',
     displayedMarkers: this.props.markers
   }
@@ -32,17 +31,13 @@ class SearchList extends Component{
   }
 
   openSidebar = () => {
-    /*this.setState( (prevState) => {
-      return {sidebarOpen: !prevState.sidebarOpen};
-    });*/
+      this.updateSearchQuery(this.state.searchQuery);
     const sidebar = document.querySelector('.sidebar');
     console.log(sidebar.style.display);
     sidebar.style.display === 'flex' ? sidebar.style.display = 'none' : sidebar.style.display = 'flex';
   }
 
   render() {
-
-
     return(
       <div>
       <header>
