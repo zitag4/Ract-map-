@@ -8,13 +8,15 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
+    h2Info: 'Explore the world',
     venues: [],
     markers: [],
     infoWOpen: false,
     currentMarker: {},
     map: '',
     infowindow: ''
-      }
+  }
+
   componentDidMount() {
     this.getVenues();
   }
@@ -38,7 +40,10 @@ class App extends Component {
       this.setState({
         venues: response.data.response.groups[0].items
       }, this.renderMap() )
-    }).catch( (error) => console.log('error' + error) )
+    }).catch( (error) => {
+      console.log('error' + error)
+      this.setState({h2Info: 'Error in loading foursquare API...'})
+  } )
   }
 
   initMap = () => {
@@ -107,22 +112,7 @@ class App extends Component {
         });
       }
     }
-
   }
-
-  /*openSidebar = () => {
-    this.setState( (prevState) => {
-      return {sidebarOpen: !prevState.sidebarOpen};
-    });
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.style.display === 'none' ? sidebar.style.display = 'block' : sidebar.style.display = 'none';
-  }
-  closeSidebar = () => {
-    this.setState({sidebarOpen: false});
-  }*/
-
-
-
 
   render() {
     return (
@@ -134,6 +124,7 @@ class App extends Component {
           openInfoWindow = {this.openInfoWindow}
           markers = {this.state.markers}
           map = {this.state.map}
+          h2Info = {this.state.h2Info}
         />
 
         <main>

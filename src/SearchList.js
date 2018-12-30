@@ -47,7 +47,7 @@ class SearchList extends Component{
             <div className='menu-button-line'/>
             <div className='menu-button-line'/>
           </button>
-          <h2>Explore the world</h2>
+          <h2>{this.props.h2Info}</h2>
       </header>
       <div className='sidebar'>
       <form>
