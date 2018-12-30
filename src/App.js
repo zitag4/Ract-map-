@@ -5,10 +5,10 @@ import SearchList from './SearchList.js';
 import axios from 'axios';
 
 
+
 class App extends Component {
   state = {
     venues: [],
-    sidebarOpen: false,
     markers: [],
     infoWOpen: false,
     currentMarker: {},
@@ -110,40 +110,31 @@ class App extends Component {
 
   }
 
-  openSidebar = () => {
+  /*openSidebar = () => {
     this.setState( (prevState) => {
       return {sidebarOpen: !prevState.sidebarOpen};
     });
-
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.style.display === 'none' ? sidebar.style.display = 'block' : sidebar.style.display = 'none';
   }
   closeSidebar = () => {
     this.setState({sidebarOpen: false});
-  }
+  }*/
+
 
 
 
   render() {
     return (
       <div className='app'>
-      <header>
 
-        <nav className='navigation' role="navigation" >
-          <button className='menu-button' onClick={this.openSidebar}
-           aria-label="Navigation">
-            <div className='menu-button-line'/>
-            <div className='menu-button-line'/>
-            <div className='menu-button-line'/>
-          </button>
-          <h1>Explore the world</h1>
-        </nav>
-      </header>
 
-    { this.state.sidebarOpen &&
-          <SearchList
-            openInfoWindow = {this.openInfoWindow}
-            markers = {this.state.markers}
-            map = {this.state.map}
-          />}
+
+        <SearchList
+          openInfoWindow = {this.openInfoWindow}
+          markers = {this.state.markers}
+          map = {this.state.map}
+        />
 
         <main>
 	         <div id='map'

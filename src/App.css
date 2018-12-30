@@ -18,14 +18,13 @@ html, body {
   flex-direction: column;
   justify-content: space-around;
   height: 45px;
-  width: 50px;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0;
   box-sizing: border-box;
   float: left;
   margin-top: 10px;
+  padding: 0 1em;
 }
 
 .menu-button-line {
@@ -35,9 +34,9 @@ html, body {
   border-radius: 15px;
 }
 
-h1 {
+h2 {
   color: white;
-  padding-right: 50px;
+  padding-right: 30px;
   float: right;
 }
 
@@ -48,30 +47,23 @@ header {
 	background-color: #005169;
   top: 0;
   left: 0;
-  z-index: 200;
+  z-index: 300;
   border-radius: 15px;
   border-bottom: 2px dotted white;
-
-}
-
-.navigation {
-  height: 100%;
-  padding: 0 1em;
 }
 
 .sidebar {
-  height: 91.3%;
+  height: auto;
   background-color: #005169;
-  position: fixed;
-  top: 8%;
+  position: absolute;
+  top: 0;
   left: 0;
-  width: 70%;
-  max-width: 400px;
-  z-index:300;
-  display: flex;
+  width: 250px;
+  max-width: 60%;
+  z-index:200;
+  display: none;
   flex-direction: column;
-  justify-content: center;
-  border: 2px dotted white;
+  border-right: 2px dotted white;
   border-radius: 25px;
 }
 
@@ -105,18 +97,21 @@ header {
 }
 
 .location-item:hover {}
+
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 input {
-  margin-top: 70px;
-  height: 45px;
+  margin-top: 100px;
+  height: 30px;
   border: 5px solid white;
   border-radius: 15px;
   width: 80%;
 }
+
 input:focus {
   background-color: lightblue;
 }

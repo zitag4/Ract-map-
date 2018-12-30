@@ -4,6 +4,7 @@ import './App.css';
 
 class SearchList extends Component{
   state = {
+
     searchQuery: '',
     displayedMarkers: this.props.markers
   }
@@ -30,10 +31,29 @@ class SearchList extends Component{
       this.props.openInfoWindow(element);
   }
 
+  openSidebar = () => {
+    /*this.setState( (prevState) => {
+      return {sidebarOpen: !prevState.sidebarOpen};
+    });*/
+    const sidebar = document.querySelector('.sidebar');
+    console.log(sidebar.style.display);
+    sidebar.style.display === 'flex' ? sidebar.style.display = 'none' : sidebar.style.display = 'flex';
+  }
+
   render() {
 
 
     return(
+      <div>
+      <header>
+          <button className='menu-button' onClick={this.openSidebar}
+           aria-label="Navigation">
+            <div className='menu-button-line'/>
+            <div className='menu-button-line'/>
+            <div className='menu-button-line'/>
+          </button>
+          <h2>Explore the world</h2>
+      </header>
       <div className='sidebar'>
       <form>
         <input className='input-field'
@@ -45,7 +65,7 @@ class SearchList extends Component{
         </input>
       </form>
       <ul role="tablist">
-        {this.state.displayedMarkers.map( (marker) => (
+        { this.state.displayedMarkers.map( (marker) => (
         <li key={marker.id}
             className='list-item'
             tabindex={0}
@@ -56,6 +76,7 @@ class SearchList extends Component{
         </li>
       ))}
       </ul>
+      </div>
       </div>
     )
   }
