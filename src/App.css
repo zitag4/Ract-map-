@@ -35,9 +35,13 @@ html, body {
 }
 
 h2 {
-  color: white;
   padding-right: 30px;
+}
+
+.title {
+  display: block;
   float: right;
+  color: white;
 }
 
 header {

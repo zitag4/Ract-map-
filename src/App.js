@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Infowindow from './Infowindow.js';
 import SearchList from './SearchList.js';
 import axios from 'axios';
-
-
 
 class App extends Component {
   state = {
@@ -26,60 +23,56 @@ class App extends Component {
     window.initMap = this.initMap
   }
 
+  //I used foursquare's places API to get location information
   getVenues = () => {
     const endPoint = 'https://api.foursquare.com/v2/venues/explore?';
     const parameters = {
       client_id: 'GBCUIPW1GMDADLUUNRKTST4PIBCAI3PBGZAKI1WBX02CBXB4',
       client_secret: 'YEIZF1BKB2YANFN5YRLNMRQ0FXOJZXYHOG150NPZEXBVULYF',
-      query: 'food',
+      query: 'cinema',
       near: 'Hanover',
       v: '20182507'
     }
-
+    //Making the request for locations data (https://github.com/axios/axios)
     axios.get(endPoint + new URLSearchParams(parameters)).then( (response) => {
       this.setState({
-        venues: response.data.response.groups[0].items
-      }, this.renderMap() )
-    }).catch( (error) => {
-      console.log('error' + error)
-      this.setState({h2Info: 'Error in loading foursquare API...'})
-  } )
+          venues: response.data.response.groups[0].items
+        }, this.renderMap() )
+      }).catch( (error) => {
+        console.log('error' + error)
+        this.setState({h2Info: 'Error in loading foursquare API...'})
+      })
   }
 
   initMap = () => {
-    // Create a new blank array for all the listing markers.
     let markers = [];
-
     const google = window.google;
-  let map = new google.maps.Map(document.getElementById('map'), {
+    // Constructor creates a new map
+    let map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 52.3664032, lng: 9.7441556},
       zoom: 13
     })
+    let infowindow = new google.maps.InfoWindow();
 
-  let infowindow = new google.maps.InfoWindow();
+    this.setState({map: map, infowindow: infowindow})
 
-  this.setState({map: map, infowindow: infowindow})
-
-
-      // Create a marker per location, and put into markers array.
-      this.state.venues.map( (xvenue, i) => {
+    // Create a marker per location, and put into markers array.
+    this.state.venues.forEach( (venue, i) => {
       let marker = new google.maps.Marker({
         map: map,
-        position: {lat: xvenue.venue.location.lat, lng: xvenue.venue.location.lng},
-        title: xvenue.venue.name,
-        address: xvenue.venue.location.address,
+        position: {lat: venue.venue.location.lat, lng: venue.venue.location.lng},
+        title: venue.venue.name,
+        address: venue.venue.location.address,
         animation: google.maps.Animation.DROP,
         id: i
       });
-      // Push the marker to our array of markers.
+      // Push the marker to array of markers.
       markers.push(marker);
-      //  infowindow.open(map, marker)
       // Create an onclick event to open an infowindow at each marker.
       marker.addListener('click', () => {
         this.openInfoWindow(marker);
       });
      })
-
     this.setState({markers: markers});
   }
 
@@ -87,24 +80,22 @@ class App extends Component {
     this.setState({
       currentMarker: marker,
       infoWOpen: true
-      });
+    });
+  }
 
-    //this.state.infowindow.open(this.state.map, this.state.currentMarker)
-    }
-
+  // When a marker is clicked the infowindow is showed with
+  //informations about the currentMarker (last selected) locations
   updateInfowindow = () => {
-      if(this.state.infoWOpen) {
-
+    if(this.state.infoWOpen) {
       if (this.state.infowindow) {
-
-        this.state.infowindow.setContent('<div>' + '<h3>' + this.state.currentMarker.title + '</h3>' + '<p>' + this.state.currentMarker.address+'</p>' + '</div>');
+        this.state.infowindow.setContent('<div> <h3>' + this.state.currentMarker.title + '</h3> <p>' + this.state.currentMarker.address+'</p> </div>');
         this.state.infowindow.open(this.state.map, this.state.currentMarker);
         this.state.currentMarker.setAnimation(
 					window.google.maps.Animation.BOUNCE)
           setTimeout((this.state.currentMarker.setAnimation((null))), 1000);
-        // Make sure the marker property is cleared if the infowindow is closed.
+        // clear marker property if the infowindow is closed.
         this.state.infowindow.addListener('closeclick', () => {
-      //    this.state.infowindow.setMarker = null;
+        //this.state.infowindow.setMarker = null;
           this.setState({
             currentMarker: null,
             infoWOpen: false
@@ -117,27 +108,15 @@ class App extends Component {
   render() {
     return (
       <div className='app'>
-
-
-
         <SearchList
           openInfoWindow = {this.openInfoWindow}
           markers = {this.state.markers}
           map = {this.state.map}
-          h2Info = {this.state.h2Info}
-        />
-
+          h2Info = {this.state.h2Info}/>
         <main>
-	         <div id='map'
-                role='application'
-              >
-           </div>
+	         <div id='map' role='application'></div>
 	      </main>
-
-      <div tabIndex={0}>
-
-     {this.updateInfowindow()}
-      </div>
+        <div tabIndex={0}>{this.updateInfowindow()}</div>
       </div>
     );
   }
