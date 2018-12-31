@@ -36,12 +36,12 @@ html, body {
 
 h2 {
   padding-right: 30px;
+    color: white;
 }
 
 .title {
   display: block;
   float: right;
-  color: white;
 }
 
 header {

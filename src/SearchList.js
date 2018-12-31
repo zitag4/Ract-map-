@@ -48,7 +48,7 @@ class SearchList extends Component{
             </button>
             <div className='title'>
             <h2>{this.props.h2Info}</h2>
-            <p>Powerd by foursquare</p>
+            <p>Powerd by Foursquare</p>
             </div>
         </header>
         <div className='sidebar' role='Navigation'>

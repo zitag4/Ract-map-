@@ -31,7 +31,7 @@ class App extends Component {
       client_secret: 'YEIZF1BKB2YANFN5YRLNMRQ0FXOJZXYHOG150NPZEXBVULYF',
       query: 'cinema',
       near: 'Hanover',
-      v: '20182507'
+      v: '20181227'
     }
     //Making the request for locations data (https://github.com/axios/axios)
     axios.get(endPoint + new URLSearchParams(parameters)).then( (response) => {
@@ -40,7 +40,7 @@ class App extends Component {
         }, this.renderMap() )
       }).catch( (error) => {
         console.log('error' + error)
-        this.setState({h2Info: 'Error in loading foursquare API...'})
+        this.setState({h2Info: 'Error in loading Foursquare API...'})
       })
   }
 
